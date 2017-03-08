@@ -1,0 +1,20 @@
+#!/bin/bash
+
+PAGE=$1
+WIKIURL=
+KEY=
+USER=
+LOCATION=
+DOCROOT=
+
+# Ensure latest
+git pull
+
+# Export as HTML
+grip --export ${PAGE}.md
+
+# Replace images
+sed -i '' "s?${WIKIURL}??g" ${PAGE}.html
+
+# Upload
+scp -i ${KEY} -pr ./${PAGE}.html ${USER}@${LOCATION}:${DOCROOT}
